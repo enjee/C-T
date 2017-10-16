@@ -1,6 +1,6 @@
 import pandas as pd
 
-DATA_FILE = "../../data/restaurants.csv"
+DATA_FILE = "../data/restaurants.csv"
 
 class FileIO():
     def __init__(self, data_handler):
