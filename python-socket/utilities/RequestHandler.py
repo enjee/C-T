@@ -1,5 +1,6 @@
 import json
 from FileIO import FileIO
+from Filter import Filter
 
 
 class RequestHandler():
@@ -9,6 +10,7 @@ class RequestHandler():
     def __init__(self, data_handler):
         self.data_handler = data_handler
         self.io = FileIO(data_handler)
+        self.filter = Filter(self.io, self.data_handler)
 
     #######################################################
     # Receive a message from the web application through the socket
@@ -23,14 +25,17 @@ class RequestHandler():
             if request['type'] == 'ping':
                 self.ping_request(request)
 
-            if request['type'] == 'location':
-                self.location_request(request)
+            if request['type'] == 'nearest':
+                self.nearest_request(request)
 
-            else:
-                print "Error, {} has no type specified or type is not recognizable".format(message)
+            if request['type'] == 'update':
+                self.update_dataset_request(request)
+
 
         except(ValueError):
             print "Error, {} is not a json object".format(message)
+        # except:
+        #     print "Bad request"
     #######################################################
     # Helper methods for handling specific requests
     #######################################################
@@ -38,7 +43,11 @@ class RequestHandler():
     def ping_request(self, request):
         self.data_handler.send({'ping': 'pong'})
 
+    def nearest_request(self, request):
+        lat = float(request['latitude'])
+        lon = float(request['longitude'])
+        self.data_handler.send(self.filter.get_nearest_restaurant(lat, lon))
 
-    def location_request(self, request):
-        location = request['location']
-        # do stuff with location
+    def update_dataset_request(self, request):
+        self.data_handler.send({'updating': True})
+        self.io.update_dataset()

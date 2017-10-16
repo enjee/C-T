@@ -16,3 +16,5 @@ class FileIO():
             data = pd.read_csv(data_file, sep='\t', encoding='utf-8')
         return data
 
+    def update_dataset(self):
+        self.data_handler.send({"fake_update": True})
