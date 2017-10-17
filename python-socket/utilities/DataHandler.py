@@ -2,6 +2,7 @@ import tornado.websocket
 import json
 from RequestHandler import RequestHandler
 
+
 #######################################################
 # Basic Tornado socket implementation.
 #
@@ -12,11 +13,11 @@ class DataHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print "Connection has been opened"
         self.request_handler = RequestHandler(self)
+        self.send({"connection": "open"})
         print "Request handler has been created"
 
     def on_close(self):
         print "Connection has been closed"
-
 
     #######################################################
     # Message recieved, delegate to the request handler
@@ -24,7 +25,6 @@ class DataHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         print "Message received: ", message
         self.request_handler.receive(message)
-
 
     #######################################################
     # Send a message, will always be serialized to JSON
@@ -41,4 +41,3 @@ class DataHandler(tornado.websocket.WebSocketHandler):
     #######################################################
     def check_origin(self, origin):
         return True
-

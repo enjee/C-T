@@ -28,6 +28,9 @@ class RequestHandler():
             if request['type'] == 'nearest':
                 self.nearest_request(request)
 
+            if request['type'] == 'locations':
+                self.locations_request(request);
+
             if request['type'] == 'update':
                 self.update_dataset_request(request)
 
@@ -47,6 +50,9 @@ class RequestHandler():
         lat = float(request['latitude'])
         lon = float(request['longitude'])
         self.data_handler.send(self.filter.get_nearest_restaurant(lat, lon))
+
+    def locations_request(self, request):
+        self.data_handler.send( {'locations': self.filter.get_all_locations()} )
 
     def update_dataset_request(self, request):
         self.data_handler.send({'updating': True})

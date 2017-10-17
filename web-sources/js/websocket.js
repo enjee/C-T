@@ -18,14 +18,14 @@ new function () {
         websocket.onclose = onClose;
         websocket.onmessage = onMessage;
         websocket.onerror = onError;
-    }
+    };
 
     var close = function () {
         if (websocket) {
             websocket.close();
         }
         connected = false;
-    }
+    };
     var onOpen = function () {
         connected = true;
     };
@@ -41,4 +41,4 @@ new function () {
     var onError = function (event) {
         showErrorPopup("Connection to the websocket could not be initialized.");
     }
-}
+};

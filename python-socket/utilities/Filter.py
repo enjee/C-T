@@ -7,9 +7,9 @@ class Filter():
     def __init__(self, io, data_handler):
         self.data_handler = data_handler
         self.io = io
+        self.df_restaurants = self.io.data_file
 
     def get_nearest_restaurant(self, lat, lon):
-        self.df_restaurants = self.io.data_file
         nearest_distance = (-1, 100000000)
         print "Looping all restaurants"
         for i in range(len(self.df_restaurants)):
@@ -36,3 +36,15 @@ class Filter():
         c = 2 * asin(sqrt(a))
         km = 6367 * c
         return km
+
+    def get_all_locations(self):
+        # Loop over all restaurants and provide latitude, longitude and title
+        locations = []
+        for i in range(len(self.df_restaurants)):
+            restaurant_location = {}
+            latlon = self.get_lat_lon(i)
+            restaurant_location['lat'] = latlon[0]
+            restaurant_location['lon'] = latlon[1]
+            restaurant_location['title'] = self.df_restaurants['id'][i]
+            locations.append(restaurant_location)
+        return locations

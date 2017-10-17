@@ -7,6 +7,12 @@ function requestNearest(latitude, longitude) {
     sendObject(request)
 }
 
+function requestLocations() {
+    var request = {
+        type: "locations"
+    };
+    sendObject(request)
+}
 
 function sendObject(object) {
     if (connected) {
