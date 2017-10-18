@@ -11,7 +11,6 @@ class Filter():
 
     def get_nearest_restaurant(self, lat, lon, price, categories):
         nearest_distance = (-1, 100000000)
-        print "Looping all restaurants"
         for i in range(len(self.df_restaurants)):
             current_distance = self.calculate_distance((lat, lon), self.get_lat_lon(i))
             if current_distance < nearest_distance[1]:
@@ -21,16 +20,14 @@ class Filter():
                         current_price = str(self.df_restaurants['price'][i])
                         if (current_price == price):
                             nearest_distance = (i, current_distance)
-                            print nearest_distance
                 else:
                     current_price = str(self.df_restaurants['price'][i])
                     if (current_price == price):
                         nearest_distance = (i, current_distance)
-                        print nearest_distance
 
         if nearest_distance[0] == -1:
             return {"nearest_restaurant": "{ \"error\": \"None found\" }"}
-        return {"nearest_restaurant": self.df_restaurants[nearest_distance[0] : nearest_distance[0] + 1].to_json() }
+        return {"nearest_restaurant": self.format_restaurant(nearest_distance[0]) }
 
     def get_lat_lon(self, row_nr):
         data = ast.literal_eval(self.df_restaurants['coordinates'][row_nr])
@@ -61,3 +58,15 @@ class Filter():
             restaurant_location['title'] = self.df_restaurants['id'][i]
             locations.append(restaurant_location)
         return locations
+
+    def format_restaurant(self, index):
+        restaurant = self.df_restaurants[index : index + 1]
+        latlon = self.get_lat_lon(index)
+        dict_restaurant = {}
+        dict_restaurant['latitude'] = latlon[0]
+        dict_restaurant['longitude'] = latlon[1]
+        dict_restaurant['title'] = restaurant['id'].item()
+        dict_restaurant['price'] = restaurant['price'].item()
+        dict_restaurant['categories'] = restaurant['categories'].item().decode('utf-8', 'ignore')
+
+        return dict_restaurant

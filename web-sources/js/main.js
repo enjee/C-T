@@ -6,6 +6,10 @@ $("#btn-nearest").click(function () {
 
     requestNearest(latitude, longitude, price, category);
 });
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
 
 
 
@@ -29,14 +33,14 @@ function initMap() {
 function create_marker(lat, lon, title, map) {
     var marker = new google.maps.Marker({
         position: {lat: lat, lng: lon},
-        title: toTitleCase(title.replace(/-/g, " ")),
+        title: toTitleCase(title),
         map: map
     });
     return marker;
 }
 
 function toTitleCase(str) {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    return str.replace(/-/g, " ").replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 $().ready(function () {
