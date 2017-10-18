@@ -15,7 +15,8 @@
     <div class="row">
         <div class="col-md-12 rest-card-container">
             <div class="rest-header">
-                Gijs Laurens NielsJan
+                <h2 class='text-success'>Gijs Laurens NielsJan </h2>
+                <h4 class='text-success'>Find your favorite restaurant</h2>
             </div>
         </div>
     </div>
@@ -64,7 +65,12 @@
 
                             <div class="form-group">
                                 <label for="inputsm">Price</label>
-                                <input class="form-control input-sm" type="text" value="$$" id="input-price">
+                                <select class="form-control" id="input-price">
+                                <option>$</option>
+                                <option selected>$$</option>
+                                <option>$$$</option>
+                                <option>$$$$</option>
+                              </select>
                             </div>
                         </div>
                     </div>
@@ -72,20 +78,15 @@
                 </form>
             </div>
         </div>
+
         <div class="col-md-6 rest-card-container">
             <div class="rest-card" id="output-holder">
-
             </div>
         </div>
-        <div class="col-md-6 rest-card-container">
+
+        <div class="col-md-12 rest-card-container">
             <div class="rest-card">
                 <div id="map"></div>
-            </div>
-        </div>
-
-        <div class="col-md-6 rest-card-container">
-            <div class="rest-card">
-                Hoi
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@ var connected = false;
 
 new function () {
 
-    var serverUrl = "ws://localhost:8989";
+    var serverUrl = "ws://nielsjan.nl:8989";
     var connectionStatus;
     var sendMessage;
 

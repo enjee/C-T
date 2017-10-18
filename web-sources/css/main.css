@@ -35,3 +35,8 @@ body {
     height: 400px;
     width: 100%;
 }
+
+.marker-content
+{
+  text-align: left;
+}
