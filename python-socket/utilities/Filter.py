@@ -9,14 +9,27 @@ class Filter():
         self.io = io
         self.df_restaurants = self.io.data_file
 
-    def get_nearest_restaurant(self, lat, lon):
+    def get_nearest_restaurant(self, lat, lon, price, categories):
         nearest_distance = (-1, 100000000)
         print "Looping all restaurants"
         for i in range(len(self.df_restaurants)):
             current_distance = self.calculate_distance((lat, lon), self.get_lat_lon(i))
             if current_distance < nearest_distance[1]:
-                nearest_distance = (i, current_distance)
-                print nearest_distance
+                if categories:
+                    current_categories = str(self.df_restaurants['categories'][i])
+                    if categories.lower() in current_categories.lower():
+                        current_price = str(self.df_restaurants['price'][i])
+                        if (current_price == price):
+                            nearest_distance = (i, current_distance)
+                            print nearest_distance
+                else:
+                    current_price = str(self.df_restaurants['price'][i])
+                    if (current_price == price):
+                        nearest_distance = (i, current_distance)
+                        print nearest_distance
+
+        if nearest_distance[0] == -1:
+            return {"nearest_restaurant": "{ \"error\": \"None found\" }"}
         return {"nearest_restaurant": self.df_restaurants[nearest_distance[0] : nearest_distance[0] + 1].to_json() }
 
     def get_lat_lon(self, row_nr):

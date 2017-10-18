@@ -4,6 +4,7 @@ var application_data = {
 
 function parseData(data) {
     var incoming_data = JSON.parse(data);
+    console.log("Data received: " +incoming_data);
 
     if (incoming_data.nearest_restaurant !== undefined) {
         console.log("Nearest restaurant received: " + incoming_data.nearest_restaurant);

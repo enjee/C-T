@@ -29,7 +29,7 @@ class RequestHandler():
                 self.nearest_request(request)
 
             if request['type'] == 'locations':
-                self.locations_request(request);
+                self.locations_request(request)
 
             if request['type'] == 'update':
                 self.update_dataset_request(request)
@@ -49,7 +49,11 @@ class RequestHandler():
     def nearest_request(self, request):
         lat = float(request['latitude'])
         lon = float(request['longitude'])
-        self.data_handler.send(self.filter.get_nearest_restaurant(lat, lon))
+        price = request['price']
+        categories = None
+        if 'categories' in request:
+            categories = request['categories']
+        self.data_handler.send(self.filter.get_nearest_restaurant(lat, lon, price, categories))
 
     def locations_request(self, request):
         self.data_handler.send( {'locations': self.filter.get_all_locations()} )

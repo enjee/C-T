@@ -1,9 +1,13 @@
-function requestNearest(latitude, longitude) {
+function requestNearest(latitude, longitude, price, categories) {
     var request = {
         type: "nearest",
         latitude: latitude,
-        longitude: longitude
+        longitude: longitude,
+        price: price
     };
+    if (categories !== null && categories) {
+        request.categories = categories;
+    }
     sendObject(request)
 }
 

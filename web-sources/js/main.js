@@ -1,9 +1,12 @@
 $("#btn-nearest").click(function () {
     var latitude = $("#input-lat").val();
     var longitude = $("#input-lon").val();
-    console.log(latitude, longitude);
-    requestNearest(latitude, longitude);
+    var price = $("#input-price").val();
+    var category = $("#input-cat").val();
+
+    requestNearest(latitude, longitude, price, category);
 });
+
 
 
 function initMap() {
@@ -32,8 +35,7 @@ function create_marker(lat, lon, title, map) {
     return marker;
 }
 
-function toTitleCase(str)
-{
+function toTitleCase(str) {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
