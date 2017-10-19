@@ -66,11 +66,12 @@ class Filter():
     def format_restaurant(self, index):
         restaurant = self.df_restaurants[index : index + 1]
         latlon = self.get_lat_lon(index)
-        dict_restaurant = {}
-        dict_restaurant['latitude'] = latlon[0]
-        dict_restaurant['longitude'] = latlon[1]
-        dict_restaurant['title'] = restaurant['id'].item()
-        dict_restaurant['price'] = restaurant['price'].item()
-        dict_restaurant['categories'] = restaurant['categories'].item().decode('utf-8', 'ignore')
 
-        return dict_restaurant
+        return {
+            'latitude': latlon[0],
+            'longitude': latlon[1],
+            'title': restaurant['id'].item(),
+            'price': restaurant['price'].item(),
+            'categories': restaurant['categories'].item().decode('utf-8', 'ignore'),
+            'id': index
+        }
