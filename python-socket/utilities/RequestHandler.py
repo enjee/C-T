@@ -50,10 +50,11 @@ class RequestHandler():
         lat = float(request['latitude'])
         lon = float(request['longitude'])
         price = request['price']
+        limit = request['limit']
         categories = None
         if 'categories' in request:
             categories = request['categories']
-        self.data_handler.send(self.filter.get_nearest_restaurant(lat, lon, price, categories))
+        self.data_handler.send(self.filter.get_nearest_restaurant(lat, lon, price, categories, limit))
 
     def locations_request(self, request):
         self.data_handler.send( {'locations': self.filter.get_all_locations()} )

@@ -9,25 +9,29 @@ class Filter():
         self.io = io
         self.df_restaurants = self.io.data_file
 
-    def get_nearest_restaurant(self, lat, lon, price, categories):
-        nearest_distance = (-1, 100000000)
+    def get_nearest_restaurant(self, lat, lon, price, categories, limit):
+        nearest_distance = []
         for i in range(len(self.df_restaurants)):
             current_distance = self.calculate_distance((lat, lon), self.get_lat_lon(i))
-            if current_distance < nearest_distance[1]:
-                if categories:
-                    current_categories = str(self.df_restaurants['categories'][i])
-                    if categories.lower() in current_categories.lower():
-                        current_price = str(self.df_restaurants['price'][i])
-                        if (current_price == price):
-                            nearest_distance = (i, current_distance)
-                else:
+
+            if categories:
+                current_categories = str(self.df_restaurants['categories'][i])
+                if categories.lower() in current_categories.lower():
                     current_price = str(self.df_restaurants['price'][i])
                     if (current_price == price):
-                        nearest_distance = (i, current_distance)
+                        nearest_distance.append((i, current_distance))
+            else:
+                current_price = str(self.df_restaurants['price'][i])
+                if (current_price == price):
+                    nearest_distance.append((i, current_distance))
 
-        if nearest_distance[0] == -1:
-            return {"nearest_restaurant": "{ \"error\": \"None found\" }"}
-        return {"nearest_restaurant": self.format_restaurant(nearest_distance[0]) }
+        if len(nearest_distance) == 0:
+            return {"nearest_restaurants": "{ \"error\": \"None found\" }"}
+
+        nearest_restaurants = sorted(nearest_distance, key=lambda tup: tup[1])
+        for i in range(len(nearest_restaurants)):
+            nearest_restaurants[i] = self.format_restaurant(nearest_restaurants[i][0])
+        return {"nearest_restaurants": nearest_restaurants[0: limit] }
 
     def get_lat_lon(self, row_nr):
         data = ast.literal_eval(self.df_restaurants['coordinates'][row_nr])
