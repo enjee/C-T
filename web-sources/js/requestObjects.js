@@ -3,7 +3,8 @@ function requestNearest(latitude, longitude, price, categories) {
         type: "nearest",
         latitude: latitude,
         longitude: longitude,
-        price: price
+        price: price,
+        limit: 5
     };
     if (categories !== null && categories) {
         request.categories = categories;
