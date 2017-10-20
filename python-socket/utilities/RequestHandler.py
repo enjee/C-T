@@ -36,6 +36,9 @@ class RequestHandler():
             if request['type'] == 'update':
                 self.update_dataset_request(request)
 
+            if request['type'] == 'equal':
+                self.equal_request(request)
+
 
         except ValueError:
             print "Error, {} is not a json object".format(message)
@@ -66,3 +69,8 @@ class RequestHandler():
     def update_dataset_request(self, request):
         self.data_handler.send({'updating': True})
         self.io.update_dataset()
+
+    def equal_request(self, request):
+        current_restaurant = request['restaurant']
+        limit = request['limit']
+        self.data_handler.send(self.filter.get_equal_restaurants(current_restaurant, limit))

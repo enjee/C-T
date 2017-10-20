@@ -1,7 +1,7 @@
-import pandas as pd
 import json
 import ast
 from math import radians, cos, sin, asin, sqrt
+import numpy
 
 
 class Filter():
@@ -34,9 +34,54 @@ class Filter():
 
         # Now order the filtered restaurants by distance and return the closest N
         nearest_restaurants = sorted(filtered_restaurants, key=lambda tup: tup[1])
-        for i in range(len(nearest_restaurants)):
+        for i in range(int(limit)):
             nearest_restaurants[i] = self.format_restaurant(nearest_restaurants[i][0])
         return {"nearest_restaurants": nearest_restaurants[0: int(limit)]}
+
+    def get_all_restaurants(self):
+        """
+        Get all restaurants from the dataset
+        """
+        restaurants = []
+        for i in range(len(self.df_restaurants)):
+            restaurants.append(self.format_restaurant(i))
+        return restaurants
+
+    def get_equal_restaurants(self, current_restaurant, limit):
+        """
+        Get equal restaurants to the given restaurant
+        """
+        similarity_list = []
+        for i in range(len(self.df_restaurants)):
+            curr_similarity = numpy.corrcoef(self.get_profile(current_restaurant), self.get_profile(i))[0, 1]
+            similarity_list.append((i, curr_similarity))
+        equal_restaurants = sorted(similarity_list, key=lambda tup: tup[1], reverse=True)
+        for i in range(int(limit)):
+            equal_restaurants[i+1] = self.format_restaurant(equal_restaurants[i+1][0])
+        return {"equal_restaurants": equal_restaurants[1: int(limit) + 1]}
+
+    ###################
+    # Helper methods #
+    ###################
+
+    def get_profile(self, index):
+        restaurant_profile = []
+        restaurant = self.df_restaurants[index: index + 1]
+        latlon = self.get_lat_lon(index)
+
+        restaurant_profile.append(latlon[0])                                # latitude
+        restaurant_profile.append(latlon[1])                                # longitude
+        try:
+            restaurant_profile.append(len(restaurant['price'].item()))      # nr of $ signs
+        except:
+            restaurant_profile.append(0)                                    # nr of $ signs
+        restaurant_profile.append(len(restaurant['categories'].item()))     # nr of categories
+        restaurant_profile.append(restaurant['rating'].item())              # rating (0.5 - 5.0)
+        restaurant_profile.append(int(restaurant['review_count'].item()))   # nr of reviews
+        return restaurant_profile
+
+
+
 
     def get_lat_lon(self, row_nr):
         """
@@ -62,20 +107,9 @@ class Filter():
         km = 6367 * c
         return km
 
-    def get_all_restaurants(self):
-        """
-        Get all restaurants from the dataset
-        """
-        restaurants = []
-        for i in range(len(self.df_restaurants)):
-            restaurants.append(self.format_restaurant(i))
-        return restaurants
-
     def format_restaurant(self, index):
         """
-
-        :param index:
-        :return:
+        Format a restaurant by index (ID)
         """
         restaurant = self.df_restaurants[index: index + 1]
         latlon = self.get_lat_lon(index)
@@ -85,6 +119,8 @@ class Filter():
             'longitude': latlon[1],
             'title': restaurant['id'].item(),
             'price': restaurant['price'].item(),
+            'rating': restaurant['rating'].item(),
+            'review_count': int(restaurant['review_count'].item()),
             'categories': restaurant['categories'].item().decode('utf-8', 'ignore'),
             'id': index
         }
