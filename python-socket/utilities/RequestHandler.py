@@ -21,6 +21,8 @@ class RequestHandler():
     def receive(self, message):
         try:
             request = json.loads(message)
+            if 'type' not in request:
+                self.data_handler.send({'error': 'invalid call'})
 
             if request['type'] == 'ping':
                 self.ping_request(request)
@@ -28,17 +30,19 @@ class RequestHandler():
             if request['type'] == 'nearest':
                 self.nearest_request(request)
 
-            if request['type'] == 'locations':
-                self.locations_request(request)
+            if request['type'] == 'all_restaurants':
+                self.all_restaurants_request(request)
 
             if request['type'] == 'update':
                 self.update_dataset_request(request)
 
 
-        except(ValueError):
+        except ValueError:
             print "Error, {} is not a json object".format(message)
-        # except:
-        #     print "Bad request"
+            self.data_handler.send({'error': "{} is not a json object".format(message)})
+        except KeyError as e:
+            self.data_handler.send({'error': "Missing parameter {0} in: {1}".format(e.args[0], message)})
+
     #######################################################
     # Helper methods for handling specific requests
     #######################################################
@@ -56,8 +60,8 @@ class RequestHandler():
             categories = request['categories']
         self.data_handler.send(self.filter.get_nearest_restaurant(lat, lon, price, categories, limit))
 
-    def locations_request(self, request):
-        self.data_handler.send( {'locations': self.filter.get_all_locations()} )
+    def all_restaurants_request(self, request):
+        self.data_handler.send({'all_restaurants': self.filter.get_all_restaurants()})
 
     def update_dataset_request(self, request):
         self.data_handler.send({'updating': True})
