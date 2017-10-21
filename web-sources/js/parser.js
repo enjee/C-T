@@ -24,14 +24,14 @@ function parseData(data) {
     price = restaurant['price'];
     console.info(toTitleCase(title), price, categories);
     cat_string = "";
-    for (var i = 0; i < categories.length; i++) {
-        cat_string += categories[i]["title"] + "\t"
+    for (var j = 0; j < categories.length; j++) {
+        cat_string += categories[j]["title"] + "\t"
     }
-    $("#output-holder").html("<p>" + title + "</p>" +
+    $("#output-holder").html("<p>" + toTitleCase(title) + "</p>" +
         "<p>" + price + "</p>" +
         "<p>" + cat_string + "</p>");
-    
-    var content = "<div class='marker-content'><h4 class='text-primary'>" + title + "</h4>" 
+
+    var content = "<div class='marker-content'><h4 class='text-primary'>" + toTitleCase(title) + "</h4>" 
     + "<p>Price: " + price + "</p>" 
     + "<p>Food: " + cat_string + "</p>" 
     + "</div>";
