@@ -39,6 +39,9 @@ class RequestHandler():
             if request['type'] == 'equal':
                 self.equal_request(request)
 
+            if request['type'] == 'categories':
+                self.categories_request(request)
+
 
         except ValueError:
             print "Error, {} is not a json object".format(message)
@@ -74,3 +77,6 @@ class RequestHandler():
         current_restaurant = request['restaurant']
         limit = request['limit']
         self.data_handler.send(self.filter.get_equal_restaurants(current_restaurant, limit))
+
+    def categories_request(self, request):
+        self.data_handler.send({'categories': self.filter.get_categories()})

@@ -60,6 +60,13 @@ class Filter():
             equal_restaurants[i + 1] = self.format_restaurant(equal_restaurants[i + 1][0])
         return {"equal_restaurants": equal_restaurants[1: int(limit) + 1]}
 
+    def get_categories(self):
+        categories = []
+        for i in range(len(self.df_restaurants)):
+            categories += self.get_categories_from_string(self.df_restaurants['categories'][i])
+
+        return list(set(categories))
+
     ###################
     # Helper methods #
     ###################
@@ -125,3 +132,14 @@ class Filter():
             'categories': restaurant['categories'].item().decode('utf-8', 'ignore'),
             'id': index
         }
+
+    def get_categories_from_string(self, string):
+        categories = []
+        list =  string.encode("ascii").replace("'", "").split(" ")
+        list = [word[1:] for word in list]
+        list = list[1:]
+
+        for i in range(len(list)):
+            if list[i] == "title:":
+                categories.append(list[i+1].split("}")[0])
+        return categories
