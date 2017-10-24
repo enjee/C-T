@@ -20,21 +20,22 @@ var mapinfobox = null;
 function initMap() {
     var user_loc;
     if (application_data.user_location === undefined) {
-        user_loc = {lat: 40.73, lng: -73.93};
+        user_loc = {lat: 40.77, lng: -73.93};
     } else {
         user_loc = {lat: application_data.user_location[0], lng: application_data.user_location[1]}
     }
      map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 9,
+        zoom: 11,
         center: user_loc
     });
 }
 
-function create_marker(lat, lon, title, contentstring) {
+function create_marker(lat, lon, title, contentstring, pinImage) {
     var marker = new google.maps.Marker({
         position: {lat: lat, lng: lon},
         title: toTitleCase(title),
-        map: map
+        map: map,
+        icon: pinImage
     });
     markers.push(marker);
  
@@ -104,4 +105,8 @@ function setMarkerInfoBox(marker, content) {
     });
 
     mapinfobox.open(map, marker);
+}
+
+function showEqualRestaurants(clicked_button) {
+    requestEqual(clicked_button.id, 5);
 }

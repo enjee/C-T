@@ -12,12 +12,22 @@ function requestNearest(latitude, longitude, price, categories) {
     sendObject(request)
 }
 
-function requestLocations() {
+function requestAll() {
     var request = {
-        type: "locations"
+        type: "all_restaurants"
     };
     sendObject(request)
 }
+
+function requestEqual(restaurant_id, limit) {
+    var request = {
+        type: "equal",
+        restaurant: parseInt(restaurant_id),
+        limit: limit
+    };
+    sendObject(request)
+}
+
 
 function sendObject(object) {
     if (connected) {
