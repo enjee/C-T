@@ -9,14 +9,14 @@ function requestNearest(latitude, longitude, price, categories) {
     if (categories !== null && categories) {
         request.categories = categories;
     }
-    sendObject(request)
+    sendObject(request);
 }
 
 function requestAll() {
     var request = {
         type: "all_restaurants"
     };
-    sendObject(request)
+    sendObject(request);
 }
 
 function requestEqual(restaurant_id, limit) {
@@ -25,8 +25,16 @@ function requestEqual(restaurant_id, limit) {
         restaurant: parseInt(restaurant_id),
         limit: limit
     };
-    sendObject(request)
+    sendObject(request);
 }
+
+function requestCategories() {
+   var request = {
+       type: "categories"
+   };
+   sendObject(request);
+}
+
 
 
 function sendObject(object) {
