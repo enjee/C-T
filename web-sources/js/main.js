@@ -4,6 +4,7 @@ $("#btn-nearest").click(function () {
     var price = $("#input-price").val();
     var category = $("#input-cat").val();
 
+    application_data.user_location = [parseFloat(latitude), parseFloat(longitude)];
     requestNearest(latitude, longitude, price, category);
 });
 
@@ -17,10 +18,15 @@ var markers = [];
 var mapinfobox = null;
 
 function initMap() {
-    var ny = {lat: 40.73, lng: -73.93};
+    var user_loc;
+    if (application_data.user_location === undefined) {
+        user_loc = {lat: 40.73, lng: -73.93};
+    } else {
+        user_loc = {lat: application_data.user_location[0], lng: application_data.user_location[1]}
+    }
      map = new google.maps.Map(document.getElementById('map'), {
         zoom: 9,
-        center: ny
+        center: user_loc
     });
 }
 
@@ -37,6 +43,20 @@ function create_marker(lat, lon, title, contentstring) {
                 setMarkerInfoBox(marker, contentstring);
             };
         })(marker, contentstring));
+}
+
+function create_user_marker(lat, lon) {
+    console.log(lat, lon)
+    var marker = new google.maps.Marker({
+        position: {lat: parseFloat(lat), lng: parseFloat(lon)},
+        title: "Your current location",
+        map: map,
+        icon: {
+            path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+            scale: 4
+        }
+    });
+    markers.push(marker);
 }
 
  // Sets the map on all markers in the array.

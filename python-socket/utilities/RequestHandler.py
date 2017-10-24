@@ -47,7 +47,7 @@ class RequestHandler():
             self.data_handler.send({'error': "Missing parameter {0} in: {1}".format(e.args[0], message)})
 
     #######################################################
-    # Helper methods for handling specific requests
+    # Helper methods for handling specific requests       #
     #######################################################
 
     def ping_request(self, request):

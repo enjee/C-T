@@ -57,7 +57,7 @@ class Filter():
             similarity_list.append((i, curr_similarity))
         equal_restaurants = sorted(similarity_list, key=lambda tup: tup[1], reverse=True)
         for i in range(int(limit)):
-            equal_restaurants[i+1] = self.format_restaurant(equal_restaurants[i+1][0])
+            equal_restaurants[i + 1] = self.format_restaurant(equal_restaurants[i + 1][0])
         return {"equal_restaurants": equal_restaurants[1: int(limit) + 1]}
 
     ###################
@@ -65,23 +65,24 @@ class Filter():
     ###################
 
     def get_profile(self, index):
+        """
+        Get an array with all 'profile' values about a restaurant.
+        This array will always be filled with numbers (floats / ints)
+        """
         restaurant_profile = []
         restaurant = self.df_restaurants[index: index + 1]
         latlon = self.get_lat_lon(index)
 
-        restaurant_profile.append(latlon[0])                                # latitude
-        restaurant_profile.append(latlon[1])                                # longitude
+        restaurant_profile.append(latlon[0])  # latitude
+        restaurant_profile.append(latlon[1])  # longitude
         try:
-            restaurant_profile.append(len(restaurant['price'].item()))      # nr of $ signs
+            restaurant_profile.append(len(restaurant['price'].item()))  # nr of $ signs
         except:
-            restaurant_profile.append(0)                                    # nr of $ signs
-        restaurant_profile.append(len(restaurant['categories'].item()))     # nr of categories
-        restaurant_profile.append(restaurant['rating'].item())              # rating (0.5 - 5.0)
-        restaurant_profile.append(int(restaurant['review_count'].item()))   # nr of reviews
+            restaurant_profile.append(0)  # nr of $ signs
+        restaurant_profile.append(len(restaurant['categories'].item()))  # nr of categories
+        restaurant_profile.append(restaurant['rating'].item())  # rating (0.5 - 5.0)
+        restaurant_profile.append(int(restaurant['review_count'].item()))  # nr of reviews
         return restaurant_profile
-
-
-
 
     def get_lat_lon(self, row_nr):
         """
