@@ -1,9 +1,13 @@
+$( document ).ready(function() {
+    setTimeout(requestCategories,2000);
+});
+
 $("#btn-nearest").click(function () {
     var latitude = $("#input-lat").val();
     var longitude = $("#input-lon").val();
     var price = $("#input-price").val();
     var category = $("#input-cat").val();
-
+    console.log(category);
     application_data.user_location = [parseFloat(latitude), parseFloat(longitude)];
     requestNearest(latitude, longitude, price, category);
 });

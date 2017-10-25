@@ -25,6 +25,11 @@ function parseData(data) {
         equal_restaurants = incoming_data.equal_restaurants;
         handle_equal_restaurants(equal_restaurants);
     }
+    else if (incoming_data.categories !== undefined) {
+        console.log("Received categories");
+        categories = incoming_data.categories.sort().reverse();
+        handle_categories(categories);
+    }
     else {
         console.error("Unexpected value in parser.js" + incoming_data);
     }
@@ -87,3 +92,15 @@ function create_marker_from_restaurant(restaurant, pinColor) {
 function format_json(string) {
     return JSON.parse(string.replaceAll('u', '').replaceAll("'", '"'));
 }
+
+
+function handle_categories(categories) {
+    for (var i = categories.length - 1; i >= 0; i--) {
+         var cat = categories[i];
+          $('#input-cat')
+         .append($("<option></option>")
+                    .attr("value",cat)
+                    .text(cat)); 
+    }
+}
+
