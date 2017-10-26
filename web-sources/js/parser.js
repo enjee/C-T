@@ -95,10 +95,12 @@ function format_json(string) {
 
 
 function handle_categories(categories) {
+    $('#input-cat').append($("<option></option>")
+                    .attr("value",null)
+                    .text("")); 
     for (var i = categories.length - 1; i >= 0; i--) {
          var cat = categories[i];
-          $('#input-cat')
-         .append($("<option></option>")
+          $('#input-cat').append($("<option></option>")
                     .attr("value",cat)
                     .text(cat)); 
     }

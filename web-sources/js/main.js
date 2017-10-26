@@ -114,3 +114,21 @@ function setMarkerInfoBox(marker, content) {
 function showEqualRestaurants(clicked_button) {
     requestEqual(clicked_button.id, 5);
 }
+
+$(function(){
+    $('div.street-chooser').not('.disabled').find('div.street-chooser-item').on('click', function(){
+        $(this).parent().parent().find('div.street-chooser-item').removeClass('selected');
+        $(this).addClass('selected');
+        $(this).find('input[type="radio"]').prop("checked", true);
+        
+    });
+});
+
+
+$("#btn-streetsearch").click(function () {
+    var imgUrl = $("div.street-chooser-item.selected img").attr("src");
+   
+    console.log(imgUrl);
+
+});
+
