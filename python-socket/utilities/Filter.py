@@ -70,8 +70,9 @@ class Filter():
     def get_yelpreviews(self, yelp_id):
         reviews = []
         url = "https://api.yelp.com/v3/businesses/" + yelp_id + "/reviews"
+        #Access token:#
+        #iW9jU-McASlUUnLS6DqSaYmlWdNR6H_RgDMJyayTbgjiu_yHlc4x7PCDJOMGe-3uUbenk57RISg2dbq5TdyZ6KD1zV8c26fqQhz8cJOgqwuxHlyfQs7jmuqpByn3WXYx#
 
-        
         for i in range(len(self.df_restaurants)):
             categories += self.get_categories_from_string(self.df_restaurants['categories'][i])
 
