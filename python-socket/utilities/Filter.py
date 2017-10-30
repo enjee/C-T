@@ -3,6 +3,9 @@ import ast
 from math import radians, cos, sin, asin, sqrt
 import numpy
 import requests
+from urllib2 import HTTPError
+from urllib import quote
+from urllib import urlencode
 
 
 class Filter():
