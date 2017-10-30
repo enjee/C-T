@@ -97,13 +97,13 @@ class Filter():
         reviews = []
         url = "https://api.yelp.com/v3/businesses/" + yelp_id + "/reviews"
 
-		BEARER_TOKEN =  obtain_bearer_token()
-		headers = {
-			'Authorization': 'Bearer %s' % BEARER_TOKEN,
+	BEARER_TOKEN =  obtain_bearer_token()
+	headers = {
+		'Authorization': 'Bearer %s' % BEARER_TOKEN,
 		}
 	
-		response = requests.request('GET', url, headers=headers)
-		return json.dumps(response.json()['reviews'])
+	response = requests.request('GET', url, headers=headers)
+	return json.dumps(response.json()['reviews'])
         #Access token:#
         #iW9jU-McASlUUnLS6DqSaYmlWdNR6H_RgDMJyayTbgjiu_yHlc4x7PCDJOMGe-3uUbenk57RISg2dbq5TdyZ6KD1zV8c26fqQhz8cJOgqwuxHlyfQs7jmuqpByn3WXYx#
 
