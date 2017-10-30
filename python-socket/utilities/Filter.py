@@ -105,7 +105,8 @@ class Filter():
 		}
 	
 	response = requests.request('GET', url, headers=headers)
-	return json.dumps(response.json()['reviews'])
+	print response.json()
+	return response.json()
         #Access token:#
         #iW9jU-McASlUUnLS6DqSaYmlWdNR6H_RgDMJyayTbgjiu_yHlc4x7PCDJOMGe-3uUbenk57RISg2dbq5TdyZ6KD1zV8c26fqQhz8cJOgqwuxHlyfQs7jmuqpByn3WXYx#
 
