@@ -70,7 +70,7 @@ class Filter():
 
 		
 
-    def obtain_bearer_token():
+    def obtain_bearer_token(self):
 	# API constants	
 	CLIENT_ID = "zq2-GC_Byjej-yF_sonmVw"
 	CLIENT_SECRET = "LuhzrN4RJCGTVN9M6WfTlaoOYO0mKyJaIKl3et2oLVaZScvrBxN0xrDzKY5OW2XV"
