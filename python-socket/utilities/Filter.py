@@ -130,7 +130,8 @@ class Filter():
             'rating': restaurant['rating'].item(),
             'review_count': int(restaurant['review_count'].item()),
             'categories': restaurant['categories'].item().decode('utf-8', 'ignore'),
-            'id': index
+            'id': index,
+            'yelp_id': restaurant['id'].item()
         }
 
     def get_categories_from_string(self, string):
