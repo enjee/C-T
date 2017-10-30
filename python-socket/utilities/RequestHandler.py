@@ -86,6 +86,6 @@ class RequestHandler():
 
     def yelpreviews_request(self, request):
         yelp_id = request['yelp_id']
-        self.data_handler.send({self.filter.get_yelpreviews(yelp_id)})
+        self.data_handler.send({'reviews': self.filter.get_yelpreviews(yelp_id)})
 
         
