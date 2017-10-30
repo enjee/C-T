@@ -97,7 +97,7 @@ class Filter():
         reviews = []
         url = "https://api.yelp.com/v3/businesses/" + yelp_id + "/reviews"
 
-	BEARER_TOKEN =  obtain_bearer_token()
+	BEARER_TOKEN =  self.obtain_bearer_token()
 	headers = {
 		'Authorization': 'Bearer %s' % BEARER_TOKEN,
 		}
