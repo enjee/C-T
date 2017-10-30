@@ -42,6 +42,9 @@ class RequestHandler():
             if request['type'] == 'categories':
                 self.categories_request(request)
 
+            if request['type'] == 'reviews':
+                self.yelpreviews_request(request)
+
 
         except ValueError:
             print "Error, {} is not a json object".format(message)
@@ -80,3 +83,9 @@ class RequestHandler():
 
     def categories_request(self, request):
         self.data_handler.send({'categories': self.filter.get_categories()})
+
+    def yelpreviews_request(self, request):
+        yelp_id = request['yelp_id']
+        self.data_handler.send({self.filter.get_yelpreviews(yelp_id)})
+
+        

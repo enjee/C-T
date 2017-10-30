@@ -30,6 +30,11 @@ function parseData(data) {
         categories = incoming_data.categories.sort().reverse();
         handle_categories(categories);
     }
+    else if (incoming_data.yelp_reviews !== undefined) {
+        console.log("Received reviews");
+        reviews = incoming_data.yelp_reviews;
+        handle_reviews(reviews);
+    }
     else {
         console.error("Unexpected value in parser.js" + incoming_data);
     }
@@ -71,22 +76,20 @@ function create_marker_from_restaurant(restaurant, pinColor) {
     title = restaurant['title'];
     id = restaurant['id'];
     price = restaurant['price'];
+    yelp_id = restaurant['yelp_id'];
     console.info(toTitleCase(title), price, categories);
     cat_string = "";
     for (var j = 0; j < categories.length; j++) {
         cat_string += categories[j]["title"] + "\t"
     }
-    $("#output-holder").html("<p>" + toTitleCase(title) + "</p>" +
-        "<p>" + price + "</p>" +
-        "<p>" + cat_string + "</p>");
-
+   
     var content = "<div class='marker-content'><h4 class='text-primary'>" + toTitleCase(title) + "</h4>"
         + "<p>Price: " + price + "</p>"
         + "<p>Food: " + cat_string + "</p>"
         + "<button id='" + id + "' type='button' class='btn btn-success' onclick='showEqualRestaurants(this)'>Show restaurants like this one</button>"
         + "</div>";
 
-    create_marker(restaurant['latitude'], restaurant['longitude'], title, content, pinImage);
+    create_marker(restaurant['latitude'], restaurant['longitude'], title,yelp_id, content, pinImage);
 }
 
 function format_json(string) {
@@ -104,5 +107,9 @@ function handle_categories(categories) {
                     .attr("value",cat)
                     .text(cat)); 
     }
+}
+
+function handle_reviews(reviews) {
+   console.log(reviews);
 }
 

@@ -34,12 +34,13 @@ function initMap() {
     });
 }
 
-function create_marker(lat, lon, title, contentstring, pinImage) {
+function create_marker(lat, lon, title, yelp_id, contentstring, pinImage) {
     var marker = new google.maps.Marker({
         position: {lat: lat, lng: lon},
         title: toTitleCase(title),
         map: map,
-        icon: pinImage
+        icon: pinImage,
+        yelp_id: yelp_id
     });
     markers.push(marker);
  
@@ -109,26 +110,16 @@ function setMarkerInfoBox(marker, content) {
     });
 
     mapinfobox.open(map, marker);
+        console.log(marker);
+     $("#restaurant-info").html("<h4 class='text-primary'>" + toTitleCase(marker.title) + "</h4>");
+     LoadReviewsForRestaurant(marker.yelp_id);
 }
 
 function showEqualRestaurants(clicked_button) {
     requestEqual(clicked_button.id, 5);
 }
 
-$(function(){
-    $('div.street-chooser').not('.disabled').find('div.street-chooser-item').on('click', function(){
-        $(this).parent().parent().find('div.street-chooser-item').removeClass('selected');
-        $(this).addClass('selected');
-        $(this).find('input[type="radio"]').prop("checked", true);
-        
-    });
-});
-
-
-$("#btn-streetsearch").click(function () {
-    var imgUrl = $("div.street-chooser-item.selected img").attr("src");
-   
-    console.log(imgUrl);
-
-});
+function LoadReviewsForRestaurant(yelp_id) {
+    requestYelpReviews(yelp_id);
+}
 

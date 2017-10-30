@@ -35,6 +35,13 @@ function requestCategories() {
    sendObject(request);
 }
 
+function requestYelpReviews(yelp_id) {
+    var request = {
+        type: "reviews",
+        yelp_id: yelp_id
+    };
+    sendObject(request);
+}
 
 
 function sendObject(object) {

@@ -67,6 +67,13 @@ class Filter():
 
         return list(set(categories))
 
+    def get_yelpreviews(self, yelp_id):
+        reviews = []
+        for i in range(len(self.df_restaurants)):
+            categories += self.get_categories_from_string(self.df_restaurants['categories'][i])
+
+        return list(set(categories))
+
     ###################
     # Helper methods #
     ###################
