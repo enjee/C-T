@@ -45,3 +45,9 @@ div.clear
 {
     clear: both;
 }
+
+#restaurant-reviews
+{
+ text-align: left;
+ padding: 15px;  
+}

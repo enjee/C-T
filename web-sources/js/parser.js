@@ -30,9 +30,9 @@ function parseData(data) {
         categories = incoming_data.categories.sort().reverse();
         handle_categories(categories);
     }
-    else if (incoming_data.yelp_reviews !== undefined) {
+    else if (incoming_data.reviews !== undefined) {
         console.log("Received reviews");
-        reviews = incoming_data.yelp_reviews;
+        reviews = incoming_data.reviews;
         handle_reviews(reviews);
     }
     else {
@@ -77,11 +77,17 @@ function create_marker_from_restaurant(restaurant, pinColor) {
     id = restaurant['id'];
     price = restaurant['price'];
     yelp_id = restaurant['yelp_id'];
-    console.info(toTitleCase(title), price, categories);
+    rating = restaurant['rating'];
+    address = format_json(restaurant['location']);
+
     cat_string = "";
     for (var j = 0; j < categories.length; j++) {
-        cat_string += categories[j]["title"] + "\t"
+        cat_string += categories[j]["title"] + ", "
     }
+
+    address_string = address["address1"];
+    address_string += ", ";
+    address_string += address["zip_code"];
    
     var content = "<div class='marker-content'><h4 class='text-primary'>" + toTitleCase(title) + "</h4>"
         + "<p>Price: " + price + "</p>"
@@ -89,7 +95,7 @@ function create_marker_from_restaurant(restaurant, pinColor) {
         + "<button id='" + id + "' type='button' class='btn btn-success' onclick='showEqualRestaurants(this)'>Show restaurants like this one</button>"
         + "</div>";
 
-    create_marker(restaurant['latitude'], restaurant['longitude'], title,yelp_id, content, pinImage);
+    create_marker(restaurant['latitude'], restaurant['longitude'], title,yelp_id, rating,cat_string,address_string,content, pinImage);
 }
 
 function format_json(string) {
@@ -110,6 +116,14 @@ function handle_categories(categories) {
 }
 
 function handle_reviews(reviews) {
-   console.log(reviews);
+    var html = "";
+  for (var i = reviews.reviews.length -1; i >= 0; i--) {
+         var review = reviews.reviews[i];
+        html += "<div class='panel panel-primary'><div class='panel-heading'><h3 class='panel-title'>"+ review.user.name +"</h3></div> ";
+        html += "<div class='panel-body'>" + review.text;
+        html += "</div></div>";
+    }
+  $('#restaurant-reviews').html(html); 
+
 }
 
