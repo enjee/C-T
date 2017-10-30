@@ -69,6 +69,8 @@ class Filter():
         return list(set(categories))
 
 		
+
+    def obtain_bearer_token():
 	# API constants	
 	CLIENT_ID = "zq2-GC_Byjej-yF_sonmVw"
 	CLIENT_SECRET = "LuhzrN4RJCGTVN9M6WfTlaoOYO0mKyJaIKl3et2oLVaZScvrBxN0xrDzKY5OW2XV"
@@ -76,22 +78,19 @@ class Filter():
 	SEARCH_PATH = '/v3/businesses/search'
 	TOKEN_PATH = '/oauth2/token'
 	GRANT_TYPE = 'client_credentials'
-
-	def obtain_bearer_token():
-		url = '{0}{1}'.format(API_HOST, quote(TOKEN_PATH.encode('utf8')))
-		assert CLIENT_ID, "Please supply your client_id."
-		assert CLIENT_SECRET, "Please supply your client_secret."
-		data = urlencode({
-			'client_id': CLIENT_ID,
-			'client_secret': CLIENT_SECRET,
-			'grant_type': GRANT_TYPE,
-		})
-		headers = {
-			'content-type': 'application/x-www-form-urlencoded',
+	
+	url = '{0}{1}'.format(API_HOST, quote(TOKEN_PATH.encode('utf8')))
+	data = urlencode({
+		'client_id': CLIENT_ID,
+		'client_secret': CLIENT_SECRET,
+		'grant_type': GRANT_TYPE,
+	})
+	headers = {
+		'content-type': 'application/x-www-form-urlencoded',
 		}
-		response = requests.request('POST', url, data=data, headers=headers)
-		bearer_token = response.json()['access_token']
-		return bearer_token
+	response = requests.request('POST', url, data=data, headers=headers)
+	bearer_token = response.json()['access_token']
+	return bearer_token
 		
     def get_yelpreviews(self, yelp_id):
         reviews = []
