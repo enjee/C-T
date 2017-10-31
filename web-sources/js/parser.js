@@ -79,7 +79,6 @@ function create_marker_from_restaurant(restaurant, pinColor) {
     yelp_id = restaurant['yelp_id'];
     rating = restaurant['rating'];
     address = format_json(restaurant['location']);
-
     cat_string = "";
     for (var j = 0; j < categories.length; j++) {
         cat_string += categories[j]["title"] + ", "
@@ -99,7 +98,8 @@ function create_marker_from_restaurant(restaurant, pinColor) {
 }
 
 function format_json(string) {
-    return JSON.parse(string.replaceAll('u', '').replaceAll("'", '"'));
+    var newstring = string.replaceAll('u', '').replaceAll("'", '"').replaceAll("None", '"None"');
+    return JSON.parse(newstring);
 }
 
 

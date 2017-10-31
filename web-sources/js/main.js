@@ -1,5 +1,6 @@
 $( document ).ready(function() {
     setTimeout(requestCategories,2000);
+     $('[data-toggle="popover"]').popover(); 
 });
 
 $("#btn-nearest").click(function () {

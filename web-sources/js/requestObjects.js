@@ -9,6 +9,7 @@ function requestNearest(latitude, longitude, price, categories) {
     if (categories !== null && categories) {
         request.categories = categories;
     }
+    console.log(request);
     sendObject(request);
 }
 
