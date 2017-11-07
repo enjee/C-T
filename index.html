@@ -11,82 +11,99 @@
 </head>
 <body>
 
-<div class="header">
-    <div class="row">
-        <div class="col-md-12 rest-card-container">
-            <div class="rest-header">
-                <h2 class='text-success'>Gijs Laurens NielsJan </h2>
-                <h4 class='text-success'>Find your favorite restaurant</h2>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Error message container -->
-<div class="container" id="container-error">
-    <div class="alert alert-danger" id="alert-error">
-        <button type="button" class="close" id="btn-close-alert">×</button>
-        <strong id="msg-error"></strong>
-    </div>
-</div>
-
-
-<div class="content">
-
-    <div class="row">
-        <div class="col-md-12 rest-card-container">
-            <div class="rest-card">
-                <form>
-                    <div class="row">
-                        <div class="col-md-6">
-
-                            <div class="form-group">
-                                <label for="inputsm">Latitude</label>
-                                <input class="form-control input-sm" type="text" value="40.77" id="input-lat">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <div class="form-group">
-                                <label for="inputsm">Longitude</label>
-                                <input class="form-control input-sm" type="text" value="-73.98" id="input-lon">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <div class="form-group">
-                                <label for="inputsm">Category</label>
-                                <input class="form-control input-sm" type="text" value="Chinese" id="input-cat">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <div class="form-group">
-                                <label for="inputsm">Price</label>
-                                <select class="form-control" id="input-price">
-                                <option>$</option>
-                                <option selected>$$</option>
-                                <option>$$$</option>
-                                <option>$$$$</option>
-                              </select>
-                            </div>
-                        </div>
+    <div class="header">
+        <div class="row">
+            <div class="col-md-12 rest-card-container">
+                <div class="rest-header">
+                    <blockquote class="blockquote">
+                    <h3>Find your favorite restaurant in New York!</h3>
+                    <footer class="blockquote-footer">By <cite title="Source Title">Gijs Laurens Niels-Jan</cite></footer>
+                    </blockquote>
                     </div>
-                    <button id="btn-nearest" type="button" class="btn btn-success">Send your location</button>
-                </form>
+                </div>
+            </div>
+        </div>
+        <!-- Error message container -->
+        <div class="container" id="container-error">
+            <div class="alert alert-danger" id="alert-error">
+                <button type="button" class="close" id="btn-close-alert">×</button>
+                <strong id="msg-error"></strong>
             </div>
         </div>
 
 
-        <div class="col-md-12 rest-card-container">
-            <div class="rest-card">
-                <div id="map"></div>
+        <div class="content">
+
+            <div class="row">
+                <div class="col-md-6 rest-card-container">
+                    <div class="rest-card">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputsm">Latitude</label>
+                                        <input class="form-control input-sm" type="text" value="40.77" id="input-lat">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label for="inputsm">Longitude</label>
+                                        <input class="form-control input-sm" type="text" value="-73.98" id="input-lon">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label for="inputsm">Category</label>
+                                        <select class="form-control" id="input-cat">
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputsm">Price</label>
+                                        <select class="form-control" id="input-price">
+                                            <option>$</option>
+                                            <option selected>$$</option>
+                                            <option>$$$</option>
+                                            <option>$$$$</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="btn-nearest" type="button" class="btn btn-success">Search restaurants</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-6 rest-card-container">
+                    <div class="rest-card">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#restaurant-info">Information</a></li>
+                            <li><a data-toggle="tab" href="#restaurant-reviews">Reviews</a></li>
+                        </ul>
+                        <div class="tab-content">
+                                <div class="tab-pane fade in active" id="restaurant-info">
+                                </div>
+                                <div class="tab-pane fade" id="restaurant-reviews">
+                                </div>
+                        </div>
+                  </div>
+              </div>
+
+
+              <div class="col-md-12 rest-card-container">
+                <div class="rest-card">
+                    <div id="map"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 </body>
@@ -102,7 +119,7 @@
 <script src="web-sources/js/websocket.js"></script>
 
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6gsew83yli7gvlFplk5WRILHi37HmLz4&callback=initMap">
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6gsew83yli7gvlFplk5WRILHi37HmLz4&callback=initMap">
 </script>
 
 

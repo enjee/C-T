@@ -1,9 +1,13 @@
+$( document ).ready(function() {
+    setTimeout(requestCategories,2000);
+     $('[data-toggle="popover"]').popover(); 
+});
+
 $("#btn-nearest").click(function () {
     var latitude = $("#input-lat").val();
     var longitude = $("#input-lon").val();
     var price = $("#input-price").val();
     var category = $("#input-cat").val();
-
     application_data.user_location = [parseFloat(latitude), parseFloat(longitude)];
     requestNearest(latitude, longitude, price, category);
 });
@@ -16,26 +20,31 @@ String.prototype.replaceAll = function(search, replacement) {
 var map;
 var markers = [];
 var mapinfobox = null;
+var userMarker = null;
 
 function initMap() {
     var user_loc;
     if (application_data.user_location === undefined) {
-        user_loc = {lat: 40.77, lng: -73.93};
+        userMarker = {lat: 40.77, lng: -73.93};
     } else {
-        user_loc = {lat: application_data.user_location[0], lng: application_data.user_location[1]}
+        userMarker = {lat: application_data.user_location[0], lng: application_data.user_location[1]}
     }
      map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
-        center: user_loc
+        center: userMarker
     });
 }
 
-function create_marker(lat, lon, title, contentstring, pinImage) {
+function create_marker(lat, lon, title, yelp_id, rating,cat_string,address_string,contentstring, pinImage) {
     var marker = new google.maps.Marker({
         position: {lat: lat, lng: lon},
         title: toTitleCase(title),
         map: map,
-        icon: pinImage
+        icon: pinImage,
+        yelp_id: yelp_id,
+        rating: rating,
+        cat_string: cat_string,
+        address_string: address_string
     });
     markers.push(marker);
  
@@ -105,8 +114,64 @@ function setMarkerInfoBox(marker, content) {
     });
 
     mapinfobox.open(map, marker);
+    
+    loadInfoForRestaurant(marker);
+    loadReviewsForRestaurant(marker.yelp_id);
 }
 
 function showEqualRestaurants(clicked_button) {
     requestEqual(clicked_button.id, 5);
 }
+
+function loadInfoForRestaurant(marker)
+{
+    var html = "";
+    html += "<h4 class='text-primary'>" + toTitleCase(marker.title) + "</h4>";
+
+    for(i = 1; i <= 5; i++)
+    {
+        if(i <= parseInt(marker.rating))
+        {
+            html += "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>";
+        }
+        else
+        {
+            html += "<span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>";
+        }
+    }
+    html += "<h5 class='text-primary'>Food: " + marker.cat_string + "</h5>";
+    html += "<h5 class='text-primary'>Address: " + marker.address_string + "</h5>";
+    html += "<button id='btn-showRoute' data-id='"+ marker.yelp_id +"' type='button' onclick='showRoute(this)' class='btn btn-success'>Show route</button>";
+    $("#restaurant-info").html(html);
+     
+}
+
+function loadReviewsForRestaurant(yelp_id) {
+    requestYelpReviews(yelp_id);
+}
+
+function showRoute(clicked_button) {
+    var selectedmarker =  $.grep(markers, function(e){ return e.yelp_id == $(clicked_button).attr('data-id') });
+    calculateAndDisplayRoute(selectedmarker[0]);
+}
+
+function calculateAndDisplayRoute(pointRestaurant) {
+      var directionsService = new google.maps.DirectionsService();
+       var directionsDisplay = new google.maps.DirectionsRenderer({
+            map: map
+        });
+    directionsService.route({
+        origin: new google.maps.LatLng(userMarker.lat,userMarker.lng),
+        destination: new google.maps.LatLng(pointRestaurant.getPosition().lat(),pointRestaurant.getPosition().lng()),
+        avoidTolls: true,
+        avoidHighways: false,
+        travelMode: google.maps.TravelMode.DRIVING
+    }, function (response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
+}
+

@@ -32,11 +32,22 @@ body {
 }
 
 #map {
-    height: 400px;
+    height: 500px;
     width: 100%;
 }
 
 .marker-content
 {
   text-align: left;
+}
+
+div.clear
+{
+    clear: both;
+}
+
+#restaurant-reviews
+{
+ text-align: left;
+ padding: 15px;  
 }
