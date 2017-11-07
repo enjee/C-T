@@ -35,6 +35,8 @@ class Filter():
         # Now order the filtered restaurants by distance and return the closest N
         nearest_restaurants = sorted(filtered_restaurants, key=lambda tup: tup[1])
         for i in range(int(limit)):
+            if i >= len(nearest_restaurants):
+                break
             nearest_restaurants[i] = self.format_restaurant(nearest_restaurants[i][0])
         return {"nearest_restaurants": nearest_restaurants[0: int(limit)]}
 
